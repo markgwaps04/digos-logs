@@ -1,0 +1,438 @@
+<div id="new_visitor">
+
+    <form class="visitor_details" data-parsley-validate>
+
+        <input type="hidden" name="first_name" value="{{data.firstname}}">
+        <input type="hidden" name="last_name" value="{{data.lastname}}">
+        <input type="hidden" name="middle_name" value="{{data.middlename}}">
+
+        <!-- Visitor Identification -->
+
+        <div class="card-header bg-light f-normal">
+
+            <div class="widget-content p-0">
+                <div class="widget-content-wrapper">
+                    <div class="widget-content-left">
+                        <div class="btn-group">
+                            <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                <img width="42" class="rounded-circle"
+                                     src="/static/images/boy.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-content-left  ml-3 header-user-info">
+                        <div class="widget-heading">
+                            {% if data.middlename %}
+
+                            {{data.firstname|lower|title}}
+                            {{data.middlename|lower|capfirst}}
+                            {{data.lastname|lower|capfirst}}
+
+                            {% else %}
+
+                            {{data.firstname|lower|title}}
+                            {{data.lastname|lower|capfirst}}
+
+                            {% endif %}
+                        </div>
+                        <div class="widget-subheading">
+                            <b>{{of_date|date:'M d Y - h:i A'}}</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- End Visitor Identification -->
+
+        <!-- Visitor details -->
+
+        <div class="card-header bg-success f-normal custom header-small">
+            <b>VISITOR/EMPLOYEE DETAILS</b>
+        </div>
+        <div class="card-body">
+
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label">
+                    Contact N#
+                </label>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">+63</span>
+                        </div>
+                        <input type="text"
+                               placeholder="Contact number (Optional)"
+                               name="contact_number"
+                               data-parsley-onlynumbers
+                               data-parsley-type="number"
+                               class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label">
+                    Gender
+                    <span class="red inline">*</span>
+                </label>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <div>
+                            <label class="custom-radio custom-control custom-control-inline btn-success btn"
+                                   for="gender_male">
+                                <input type="radio"
+                                       id="gender_male"
+                                       name="gender"
+                                       value="0"
+                                       required
+                                       class="custom-control-input">
+                                <label class="custom-control-label"
+                                       for="gender_male">
+                                    Male
+                                </label>
+                            </label>
+                            <label class="custom-radio custom-control custom-control-inline btn-success btn"
+                                   for="gender_female">
+                                <input type="radio"
+                                       id="gender_female"
+                                       name="gender"
+                                       value="1"
+                                       required
+                                       class="custom-control-input">
+                                <label class="custom-control-label"
+                                       for="gender_female">
+                                    Female
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label">
+                    Department
+                </label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <select class="form-control" name="department">
+                            <option value="" selected>Visitor Only</option>
+                            {% for per in department %}
+                            <option value="{{per.id}}">{{per.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="helper mt-1 custom text-primary">
+                        Skip if a person is not a employee and a visitor
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- End visitor details -->
+
+    </form>
+
+
+    <!-- Log details -->
+
+    <div class="card-header bg-success f-normal custom header-small">
+        <b>LOG FORM</b>
+    </div>
+    <div class="card-body">
+
+        <div class="position-relative row form-group">
+            <label class="col-sm-2 col-form-label">
+                Type
+                <span class="red inline">*</span>
+            </label>
+            <div class="col-sm-6">
+
+                <div class="nav">
+                    <a data-toggle="tab" href="#in"
+                       class="btn-pill btn-wide btn btn-outline-success btn-lg show active">
+                        <b>In</b>
+                    </a>
+                    <a data-toggle="tab" href="#out"
+                       class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-success btn-lg show">
+                        <b>Out</b>
+                    </a>
+                    <a data-toggle="tab" href="#in_and_out"
+                       class="btn-pill btn-wide btn btn-outline-success btn-lg show">
+                        <b>In and Out</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <form class="tab-pane show active" id="in" role="tabpanel" data-parsley-validate>
+
+                <input type="hidden" name="type" value="0">
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Document Type
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control" name="document_type">
+                                <option selected value="">No documents</option>
+                                {% for per in document_type %}
+                                <option value="{{per.id}}">{{per.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Document From
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control" name="document_from">
+                                <option selected value="">No documents</option>
+                                {% for per in department %}
+                                <option value="{{per.id}}">{{per.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        2nd Contact N#
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+63</span>
+                            </div>
+                            <input type="text"
+                                   placeholder="Optional"
+                                   name="contact_number2"
+                                   data-parsley-onlynumbers
+                                   data-parsley-type="number"
+                                   class="form-control">
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Details/Reason
+                    </label>
+                    <div class="col-sm-9">
+                <textarea name="purpose"
+                          placeholder="Optional"
+                          style="height:150px"
+                          class="form-control"></textarea>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="position:relative">
+                    <button type="submit" class="btn btn-lg btn-primary">
+                        Save and Close
+                    </button>
+                </div>
+
+            </form>
+            <form class="tab-pane show" id="out" role="tabpanel" data-parsley-validate>
+
+                <input type="hidden" name="type" value="1">
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Document Type
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control" name="document_type">
+                                <option selected value="">No documents</option>
+                                {% for per in document_type %}
+                                <option value="{{per.id}}">{{per.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden"name="document_from" value="{{user_profile.department.id}}">
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Document From
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control" name="document_from" disabled>
+                                <option selected value="{{user_profile.department.id}}">
+                                    {{user_profile.department.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        2nd Contact N#
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+63</span>
+                            </div>
+                            <input type="text"
+                                   placeholder="Optional"
+                                   name="contact_number2"
+                                   data-parsley-onlynumbers
+                                   data-parsley-type="number"
+                                   class="form-control">
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Details/Reason
+                    </label>
+                    <div class="col-sm-9">
+                <textarea name="purpose"
+                          placeholder="Optional"
+                          style="height:150px"
+                          class="form-control"></textarea>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="position:relative">
+                    <button type="submit" class="btn btn-lg btn-primary">
+                        Save and Close
+                    </button>
+                </div>
+
+            </form>
+            <form class="tab-pane show" id="in_and_out" role="tabpanel" data-parsley-validate>
+
+                <input type="hidden" name="type" value="2">
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Document Type
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control" name="document_type">
+                                <option selected value="">No documents</option>
+                                {% for per in document_type %}
+                                <option value="{{per.id}}">{{per.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Document From
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control" name="document_from">
+                                <option selected value="">No documents</option>
+                                {% for per in department %}
+                                <option value="{{per.id}}">{{per.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        2nd Contact N#
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+63</span>
+                            </div>
+                            <input type="text"
+                                   placeholder="Optional"
+                                   name="contact_number2"
+                                   data-parsley-onlynumbers
+                                   data-parsley-type="number"
+                                   class="form-control">
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Details/Reason
+                    </label>
+                    <div class="col-sm-9">
+                <textarea name="purpose"
+                          placeholder="Optional"
+                          style="height:150px"
+                          class="form-control"></textarea>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="position:relative">
+                    <button type="submit" class="btn btn-lg btn-primary">
+                        Save and Close
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <!-- End Log details -->
+
+
+</div>

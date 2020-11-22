@@ -1,0 +1,176 @@
+<form id="form-filter">
+
+    <div class="ui-theme-settings">
+
+        <div class="theme-settings__inner">
+            <div class="scrollbar-container ps ps--active-y">
+                <div class="theme-settings__options-wrapper form-highlight">
+                    <div class="themeoptions-heading">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left mr-3">
+                                    <div class="widget-content-left">
+                                        <i class="pe-7s-search" style="font-size:40px"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-content-left flex2 full-width">
+                                    <div class="widget-heading">
+                                        Filter Results
+                                    </div>
+                                    <div class="widget-subheading opacity-7 f-sm-1">
+                                        Click filter button to close this sidebar
+                                    </div>
+                                </div>
+                                <div class="header-user-info text-right" style="width: 20%;">
+                                    <button type="button" class="btn-shadow p-1 btn btn-lg btn-primary btn-filter">
+                                        <i class="fa text-white fa-times pr-1 pl-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="themeoptions-heading">
+                        <button type="reset"
+                                class="btn-pill btn-shadow btn-wide ml-auto btn btn-focus btn-sm"
+                                data-class="">
+                            Restore Default
+                        </button>
+                    </h4>
+                    <div class="p-3">
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-3 col-form-label">
+                                <b>Tracing code</b>
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="tracing_code" placeholder="Tracing code" class="form-control"
+                                       required="">
+                                <div class="helper mt-1 custom text-primary">
+                                    The tracing code has composed of 5-11 alphanumeric value generated after
+                                    the log transaction has been done.
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <h4 class="themeoptions-heading">
+                        <b>Name</b>
+                    </h4>
+                    <div class="p-3">
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-3 col-form-label">
+                                First name
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="firstname" placeholder="First name" class="form-control"
+                                       required="">
+                            </div>
+
+                        </div>
+
+                        <div class="position-relative row form-group">
+
+                            <label class="col-sm-3 col-form-label">
+                                Last name
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="lastname" placeholder="Last name" class="form-control"
+                                       required="">
+                            </div>
+
+                        </div>
+
+                        <div class="position-relative row form-group">
+
+                            <label class="col-sm-3 col-form-label">
+                                Middle name
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Middle name" name="middlename" class="form-control">
+                            </div>
+
+                        </div>
+                    </div>
+                    <h4 class="themeoptions-heading">
+                        <b>Date</b>
+                    </h4>
+                    <div class="p-3">
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-3 col-form-label">
+                                Date
+                            </label>
+                            <div class="col-sm-9">
+                                <div id="daterange" class="daterange-input">
+                                    <i class="fa fa-calendar"></i>&nbsp;
+                                    <input name="date_range" class="date_range_input"> <i class="fa fa-caret-down"></i>
+                                    <input type="hidden" name="start_date">
+                                    <input type="hidden" name="end_date">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <h4 class="themeoptions-heading">
+                        <b>More Options</b>
+                    </h4>
+                    <div class="p-3">
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-4 col-form-label">
+                                Department
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="department">
+                                    <option selected value="">--ALL--</option>
+                                    {% for per in departments %}
+                                    <option value="{{per.id}}">{{per.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="helper mt-1 custom text-primary">
+                                    It will search on what the visitor or a person department and where the document
+                                    from.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-4 col-form-label">
+                                Document Type
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="document_type">
+                                    <option selected value="">--ALL--</option>
+                                    {% for per in documents %}
+                                    <option value="{{per.id}}">{{per.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-4 col-form-label">
+                                State (In and Out)
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="state_in_out">
+                                    <option selected value="">--ALL--</option>
+                                    <option value="1">Already Out</option>
+                                    <option value="0">Pending</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

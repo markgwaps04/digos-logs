@@ -1,0 +1,317 @@
+<div class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-backdrop show"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="overlay-spinner">
+                <div class="icon">
+                    <i class="fa-spin fa fa-spinner"></i>
+                </div>
+            </div>
+
+            <div class="modal-header bg-success">
+                <h5 class="modal-title" id="exampleModalLongTitle">Found "{{log_details.tracing_code}}"</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="card-header bg-success f-normal custom header-small">
+                <b>IDENTIFICATION</b>
+            </div>
+
+            <div class="card-header bg-light f-normal custom">
+
+
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    <img width="42" class="rounded-circle"
+                                         src="/static/images/boy.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="widget-content-left  ml-3 header-user-info">
+                            <div class="widget-heading">
+                                <a href="#">
+
+                                    {% if log_details.person_visitor.middle_name %}
+
+                                    {{log_details.person_visitor.first_name|lower|title}}
+                                    {{log_details.person_visitor.middle_name|lower|capfirst}}
+                                    {{log_details.person_visitor.last_name|lower|capfirst}}
+
+                                    {% else %}
+
+                                    {{log_details.person_visitor.first_name|lower|title}}
+                                    {{log_details.person_visitor.last_name|lower|capfirst}}
+
+                                    {% endif %}
+
+                                </a>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Gender, <b>{{log_details.person_visitor.get_gender_display}}</b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Contact number,
+                                {% if log_details.person_visitor.contact_number %}
+                                <b>+63 {{log_details.person_visitor.contact_number}}</b>
+                                {% else %} <i>No specified</i>
+                                {% endif %}
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Office,
+                                {% if log_details.person_visitor.department_id %}
+                                <b>{{ log_details.person_visitor.department.name }}</b>
+                                {% else %} <i>Not employee</i>
+                                {% endif %}
+                            </div>
+
+                            {% if last_log %}
+
+                            <div class="widget-subheading text-default">
+                                Last visit, <b><a href="#">{{last_log.date}} at {{last_log.time}}</a></b>
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-header bg-success f-normal custom header-small">
+                <b>LOG DETAILS</b>
+            </div>
+
+            <div class="card-header bg-light f-normal custom">
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    <i class="pe-7s-info" style="font-size:40px"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-content-left  ml-3 header-user-info">
+                            <div class="widget-subheading text-default">
+                                Tracing code,
+                                <b><i>{{log_details.tracing_code}}</i></b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Document Type,
+                                {% if log_details.document_type_id %}
+                                <b>{{log_details.document_type.name}}</b>
+                                {% else %}
+                                <i>Not Specified</i>
+                                {% endif %}
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Last Log,
+                                <a href="#"><b>{{log_details.last_log.added_by.department.name}}</b></a>
+                            </div>
+                        </div>
+                        <div class="widget-content-right">
+
+                            <a href="#" class="btn btn-info btn-large">
+                                View info
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-header bg-success f-normal custom header-small">
+                <b>LOG FORM</b>
+            </div>
+
+            <div class="card-body">
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Type
+                        <span class="red inline">*</span>
+                    </label>
+                    <div class="col-sm-6">
+
+                        <div class="nav">
+                            <a data-toggle="tab" href="#in"
+                               class="btn-pill btn-wide btn btn-outline-success btn-lg show active">
+                                <b>In</b>
+                            </a>
+                            <a data-toggle="tab" href="#out"
+                               class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-success btn-lg show">
+                                <b>Out</b>
+                            </a>
+                            <a data-toggle="tab" href="#in_and_out"
+                               class="btn-pill btn-wide btn btn-outline-success btn-lg show">
+                                <b>In and Out</b>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <form class="tab-pane active" id="in" role="tabpanel" data-parsley-validate>
+
+                        <input type="hidden" name="type" value="0">
+                        <input type="hidden" name="visitor_id" value="{{person.id}}">
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-2 col-form-label">
+                                2nd Contact N#
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+63</span>
+                                    </div>
+                                    <input type="text"
+                                           placeholder="Optional"
+                                           name="contact_number2"
+                                           data-parsley-onlynumbers
+                                           data-parsley-type="number"
+                                           class="form-control">
+                                </div>
+                                <div class="helper mt-1 custom text-primary">
+                                    Skip if not necessary
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-2 col-form-label">
+                                Details/Reason
+                            </label>
+                            <div class="col-sm-9">
+                <textarea name="purpose"
+                          placeholder="Optional"
+                          style="height:150px"
+                          class="form-control"></textarea>
+                                <div class="helper mt-1 custom text-primary">
+                                    Skip if not necessary
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer" style="position:relative">
+                            <button type="submit" class="btn btn-lg btn-primary">
+                                Save and Close
+                            </button>
+                        </div>
+
+                    </form>
+                    <form class="tab-pane" id="out" role="tabpanel" data-parsley-validate>
+
+                        <input type="hidden" name="type" value="1">
+                        <input type="hidden" name="visitor_id" value="{{person.id}}">
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-2 col-form-label">
+                                2nd Contact N#
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+63</span>
+                                    </div>
+                                    <input type="text"
+                                           placeholder="Optional"
+                                           name="contact_number2"
+                                           data-parsley-onlynumbers
+                                           data-parsley-type="number"
+                                           class="form-control">
+                                </div>
+                                <div class="helper mt-1 custom text-primary">
+                                    Skip if not necessary
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-2 col-form-label">
+                                Details/Reason
+                            </label>
+                            <div class="col-sm-9">
+                <textarea name="purpose"
+                          placeholder="Optional"
+                          style="height:150px"
+                          class="form-control"></textarea>
+                                <div class="helper mt-1 custom text-primary">
+                                    Skip if not necessary
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer" style="position:relative">
+                            <button type="submit" class="btn btn-lg btn-primary">
+                                Save and Close
+                            </button>
+                        </div>
+
+                    </form>
+                    <form class="tab-pane" id="in_and_out" role="tabpanel" data-parsley-validate>
+
+                        <input type="hidden" name="type" value="2">
+                        <input type="hidden" name="visitor_id" value="{{person.id}}">
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-2 col-form-label">
+                                2nd Contact N#
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+63</span>
+                                    </div>
+                                    <input type="text"
+                                           placeholder="Optional"
+                                           name="contact_number2"
+                                           data-parsley-onlynumbers
+                                           data-parsley-type="number"
+                                           class="form-control">
+                                </div>
+                                <div class="helper mt-1 custom text-primary">
+                                    Skip if not necessary
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-2 col-form-label">
+                                Details/Reason
+                            </label>
+                            <div class="col-sm-9">
+                <textarea name="purpose"
+                          placeholder="Optional"
+                          style="height:150px"
+                          class="form-control"></textarea>
+                                <div class="helper mt-1 custom text-primary">
+                                    Skip if not necessary
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer" style="position:relative">
+                            <button type="submit" class="btn btn-lg btn-primary">
+                                Save and Close
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

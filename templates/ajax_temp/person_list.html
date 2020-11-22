@@ -1,0 +1,94 @@
+<ul class="list-group" item_count="{{itemCount}}">
+    {% for per in data %}
+
+    <li class="list-group-item">
+
+        <div class="widget-content p-0">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="btn-group">
+                        <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                            <img width="66" class="rounded-circle" src="/static/images/boy.png" alt="">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="widget-content-left  ml-3 header-user-info">
+                    <div class="widget-heading f-sm">
+                        <a href="/teacher/activity?activity={{per.activity.id}}" target="_blank">
+                            {% if per.middle_name %}
+
+                            {{per.first_name|lower|title}}
+                            {{per.middle_name|lower|capfirst}}
+                            {{per.last_name|lower|capfirst}}
+
+                            {% else %}
+
+                            {{per.first_name|lower|title}}
+                            {{per.last_name|lower|capfirst}}
+
+                            {% endif %}
+                        </a>
+                    </div>
+
+                    <p class="no-margin ">
+                        Gender, <b>{{per.get_gender_display}}</b>
+                    </p>
+
+                    {% if per.department_id is not None %}
+
+                    <p class="no-margin ">
+                        Type,
+                        {% if per.department %} <b>Employee</b>
+                        {% else %} <b>Visitor</b>
+                        {% endif %}
+                    </p>
+                    <p class="no-margin ">
+                        Office, <b>{{per.department.name}}</b>
+                    </p>
+
+                    {% endif %}
+
+                    <p class="no-margin ">
+                        Phone number, <b>+63 {{per.contact_number|default:"<i>No specified</i>"}}</b>
+                    </p>
+
+                    {% if per.last_in %}
+
+                    <p class="no-margin ">
+                        Last Visit, <a href="#"><b>{{per.last_in.date}} at {{per.last_in.time}}</b></a>
+                    </p>
+
+                    {% endif %}
+
+                    <p class="no-margin ">
+                        Added by,
+                        <a href="#">
+                            <b>
+                                {{per.added_by.user.get_full_name|default:per.added_by.user.username}}
+                            </b>
+                        </a>
+                    </p>
+                </div>
+                <div class="widget-content-right header-user-info">
+
+                    <form class="form-highlight step2_old">
+                        <input type="hidden" name="visitor_id" value="{{per.id}}">
+                        <button type="submit" class="btn btn-primary btn-lg mr-2">
+                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                <i class="fa fa-plus fa-w-20"></i>
+                            </span>
+                            <b>Add Log</b>
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </li>
+
+    {% endfor %}
+
+</ul>

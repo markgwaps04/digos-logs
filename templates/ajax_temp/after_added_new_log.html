@@ -1,0 +1,269 @@
+<div class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-backdrop show"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="overlay-spinner">
+                <div class="icon">
+                    <i class="fa-spin fa fa-spinner"></i>
+                </div>
+            </div>
+
+            <div class="modal-header bg-success">
+                <h5 class="modal-title" id="exampleModalLongTitle">Summary</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <!--   alert     -->
+
+            <div class="modal-header bg-light-warning modal-header-alert show">
+
+                <h6 class="modal-title">
+                    <div class="app-page-title no-margin no-padding">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon bg-success">
+                                    <b>
+                                        <i class="pe-7s-check text-white">
+                                        </i>
+                                    </b>
+                                </div>
+                                <div>
+                                    <b>Successfully added</b>
+                                    <div class="page-title-subheading">
+                                        You successfully added a new log for
+                                        <b>
+                                            <a href="{{log.id}}">
+                                                {% if log.details.person_visitor.middle_name %}
+
+                                                {{log.details.person_visitor.first_name|lower|title}}
+                                                {{log.details.person_visitor.middle_name|lower|capfirst}}
+                                                {{log.details.person_visitor.last_name|lower|capfirst}}
+
+                                                {% else %}
+
+                                                {{log.details.person_visitor.first_name|lower|title}}
+                                                {{log.details.person_visitor.last_name|lower|capfirst}}
+
+                                                {% endif %}
+                                            </a>
+                                        </b> in
+                                        <b>
+                                            <a href="#">{{log.date}} at {{log.time}}
+                                            </a>
+                                        </b> of tracking code
+                                        <h5 class="text-primary underline">
+                                            <b>{{log.details.tracing_code}}</b>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h6>
+                <button type="button" class="close-modal-alert close" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+
+            </div>
+
+            <div class="card-header
+                    {% if log.is_out_provided %} bg-success
+                    {% elif log.type == obj_log.IN %} bg-info
+                    {% elif log.type == obj_log.OUT %} bg-warning
+                    {% elif log.type == obj_log.IN_AND_OUT  %} bg-light-warning2
+                    {% endif %} f-normal p-4">
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    {% if log.is_out_provided %} <i class="pe-7s-check" style="font-size:40px"></i>
+                                    {% elif log.type == obj_log.IN or log.type == obj_log.OUT %}
+                                    <i class="pe-7s-info" style="font-size:40px"></i>
+                                    {% else %} <i class="pe-7s-help1" style="font-size:40px"></i>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-content-left  ml-3 header-user-info">
+                            <div class="widget-heading">
+                                {% if is_out %} Done
+                                {% elif log.type == obj_log.IN %} No further transaction
+                                {% elif log.type == obj_log.OUT %} Ongoing transaction
+                                {% elif log.type == obj_log.IN_AND_OUT %} Pending for request
+                                {% else %} Not valid transaction
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header bg-light f-normal custom">
+
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    <img width="42" class="rounded-circle" src="/static/images/boy.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-content-left  ml-3 header-user-info">
+                            <div class="widget-heading">
+                                <a href="#">
+                                    {% if log_details_person.middle_name %}
+
+                                    {{log_details_person.first_name|lower|title}}
+                                    {{log_details_person.middle_name|lower|capfirst}}
+                                    {{log_details_person.last_name|lower|capfirst}}
+
+                                    {% else %}
+
+                                    {{log_details_person.first_name|lower|title}}
+                                    {{log_details_person.last_name|lower|capfirst}}
+
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                No. of visit, <b>{{log.person_no_visit}}</b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Contact number,
+                                {% if log_details_person.contact_number %}
+                                <b>+63 {{log_details_person.contact_number}}</b>
+                                {% else %}
+                                <i>No specified</i>
+                                {% endif %}
+                            </div>
+
+                            {% if log_details_person.department %}
+
+                            <div class="widget-subheading text-default">
+                                Department,
+                                <b>{{log_details_person.department.name}}</b>
+                            </div>
+
+                            {% endif %}
+
+                            <div class="widget-subheading text-default">
+                                Last visit,
+                                <b>
+                                    <a href="#">
+                                        {{log.person_last_visit.date|date:"l, F d Y"}}
+                                        at {{log.person_last_visit.time}}
+                                    </a>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-header bg-light f-normal custom">
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    <i class="pe-7s-info" style="font-size:40px"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-content-left  ml-3 header-user-info">
+                            <div class="widget-heading">
+
+                                {% if log_details_person.middle_name %}
+
+                                {{log_details_person.first_name|lower|title}}
+                                {{log_details_person.middle_name|lower|capfirst}}
+                                {{log_details_person.last_name|lower|capfirst}}
+
+                                {% else %}
+
+                                {{log_details_person.first_name|lower|title}}
+                                {{log_details_person.last_name|lower|capfirst}}
+
+                                {% endif %}
+
+                                in
+
+                                <a href="">{{log.date|date:"l, F d Y"}} at {{log.time}}</a>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Transaction code.,
+                                <b>{{log.details.tracing_code}}</b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Type, <b>{{log.get_type_display}}</b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Contact number,
+                                {% if log.details.contact_number %}
+                                <b>+63 {{log.details.contact_number}}</b>
+                                {% else %}
+                                <i>No specified</i>
+                                {% endif %}
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Documents Type,
+                                {% if log.details.document_type %}
+                                <b>{{log.details.document_type.name}}</b>
+                                {% else %}
+                                <i>No documents</i>
+                                {% endif %}
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Documents From,
+                                {% if log.details.document_from %}
+                                <b>{{log.details.document_from.name}}</b>
+                                {% else %}
+                                <i>No documents</i>
+                                {% endif %}
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Added by, <b><a href="#">{{log.added_by.user.get_full_name}}</a></b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Purpose or Details,
+                                {% if log.purpose %}
+                                <span class="text-primary">{{log.purpose}}</span>
+                                {% else %}
+                                <i>No specified</i>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer" style="display: flex;">
+
+                <a href="/" target="_blank" class="btn btn-focus btn-lg">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-file-pdf fa-w-20"></i>
+                    </span>
+                    View as PDF
+                </a>
+
+                <form class="inline" id="action-remove" action="/log/remove">
+                    <input type="hidden" name="log_id" value="{{log.id}}">
+                    <button type="submit" class="btn btn-warning btn-lg">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-trash fa-w-20"></i>
+                    </span>
+                        Remove
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>

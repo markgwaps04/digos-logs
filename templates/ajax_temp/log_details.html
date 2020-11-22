@@ -1,0 +1,305 @@
+<div class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-backdrop show"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="overlay-spinner">
+                <div class="icon">
+                    <i class="fa-spin fa fa-spinner"></i>
+                </div>
+            </div>
+
+
+            <div class="modal-header bg-success">
+                <h5 class="modal-title" id="exampleModalLongTitle">Log Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div
+                    class="card-header
+                    {% if data.is_out_provided and data.type == LOG.IN_AND_OUT %} bg-success
+                    {% elif data.type == LOG.OUT %} bg-warning
+                    {% elif data.type == LOG.IN_AND_OUT and data.is_out_provided == False  %} bg-warning
+                    {% else %} bg-info
+                    {% endif %} f-normal p-4">
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    {% if data.is_out_provided and data.type == LOG.IN_AND_OUT %}
+                                    <i class="pe-7s-check" style="font-size:40px"></i>
+                                    {% elif data.type == LOG.OUT %} <i class="pe-7s-info" style="font-size:40px"></i>
+                                    {% else %} <i class="pe-7s-help1" style="font-size:40px"></i>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-content-left  ml-3 header-user-info">
+                            <div class="widget-heading">
+                                {% if data.is_out_provided and data.type == LOG.IN_AND_OUT %} Done
+                                {% elif data.type == LOG.IN_AND_OUT and data.is_out_provided == False %}
+                                Pending for request
+                                {% elif data.type == LOG.OUT %} Ongoing Transaction
+                                {% else %} No further transaction
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header bg-light f-normal custom">
+
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    <img width="42" class="rounded-circle" src="/static/images/boy.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-content-left  ml-3 header-user-info full-width">
+                            <div class="widget-heading">
+                                <a href="#">
+                                    {% if data.details.person_visitor.middle_name %}
+
+                                    {{data.details.person_visitor.first_name|lower|title}}
+                                    {{data.details.person_visitor.middle_name|lower|capfirst}}
+                                    {{data.details.person_visitor.last_name|lower|capfirst}}
+
+                                    {% else %}
+
+                                    {{data.details.person_visitor.first_name|lower|title}}
+                                    {{data.details.person_visitor.last_name|lower|capfirst}}
+
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Contact number,
+                                {% if data.details.person_visitor.contact_number %}
+                                <b>+63 {{data.details.person_visitor.contact_number}}</b>
+                                {% else %}
+                                <i>No specified</i>
+                                {% endif %}
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Office Assigned,
+                                {% if data.details.person_visitor.department %}
+                                <b>{{data.details.person_visitor.department.name}}</b>
+                                {% else %}
+                                <i>No office</i>
+                                {% endif %}
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Gender, <b>{{data.details.person_visitor.get_gender_display}}</b>
+                            </div>
+                        </div>
+                        <div class="widget-content-right header-user-info ml-3" style="width: 20%;">
+                            <a href="/logout" class="btn-shadow p-1 btn btn-lg btn-primary btn-sm">
+                                <i class="fa text-white fa-edit pr-1 pl-1"></i>
+                                Update info
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-header bg-light f-normal custom">
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    <i class="pe-7s-info" style="font-size:40px"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-content-left  ml-3 header-user-info full-width">
+                            <div class="widget-heading">
+
+                                {% if data.details.person_visitor.middle_name %}
+
+                                {{data.details.person_visitor.first_name|lower|title}}
+                                {{data.details.person_visitor.middle_name|lower|capfirst}}
+                                {{data.details.person_visitor.last_name|lower|capfirst}}
+
+                                {% else %}
+
+                                {{data.details.person_visitor.first_name|lower|title}}
+                                {{data.details.person_visitor.last_name|lower|capfirst}}
+
+                                {% endif %}
+
+                                in
+
+                                <a href="">{{data.date|date:"l, F d Y"}} at {{data.time}}</a>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Transaction Code.,
+                                <b>{{data.details.tracing_code}}</b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                2nd Contact number,
+                                {% if data.details.contact_number %}
+                                <b>+63 {{data.details.contact_number}}</b>
+                                {% else %}
+                                <i>No specified</i>
+                                {% endif %}
+                            </div>
+
+                            {% if data.details.document_type %}
+
+                            <div class="widget-subheading text-default">
+                                Document Type,
+                                <b>{{data.details.document_type.name}}</b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Document From,
+                                {% if data.details.document_from %}
+                                <b>{{data.details.document_from.name}}</b>
+                                {% else %}
+                                <i>No specified</i>
+                                {% endif %}
+                            </div>
+
+                            {% else %}
+
+                             <div class="widget-subheading text-default">
+                                is Document, <b>No</b>
+                            </div>
+
+                            {% endif %}
+
+
+                            <div class="widget-subheading text-default">
+                                Type, <b>{{data.get_type_display}}</b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Added by, <b><a href="#">{{data.added_by.user.get_full_name}}</a></b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Purpose,
+                                {% if data.purpose %}
+                                <b class="text-primary">{{data.purpose}}</b>
+                                {% else %}
+                                <i>Not specified</i>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="widget-content-right header-user-info ml-3" style="width: 20%;">
+                            <a href="/logout" class="btn-shadow p-1 btn btn-lg btn-primary btn-sm">
+                                <i class="fa text-white fa-list-alt pr-1 pl-1"></i>
+                                View logs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% if data.is_out_provided == False and data.type == LOG.IN_AND_OUT %}
+
+            <form class="init_modal" action="/log/out/save">
+                <input type="hidden" name="log_id" value="{{data.id}}">
+                <div class="modal-body no-padding" style="min-height:174px">
+
+                    <div class="card-body">
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-2 col-form-label">
+                                Reciever name
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input type="text"
+                                           placeholder="Firstname Middlename Lastname"
+                                           name="receiver_name"
+                                           data-parsley-onlynumbers
+                                           data-parsley-type="number"
+                                           class="form-control">
+                                </div>
+                                <div class="helper mt-1 custom text-primary">
+                                    Skip if not necessary
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label class="col-sm-2 col-form-label">
+                                Description
+                            </label>
+                            <div class="col-sm-9">
+                            <textarea name="description" placeholder="Optional" style="height:100px"
+                                      class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer" style="position:relative">
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            Mark as <b>out</b>
+                        </button>
+                    </div>
+
+                </div>
+                cf
+            </form>
+
+            {% elif is_out %}
+
+            <div class="modal-header bg-success "><b>Out details</b></div>
+
+            <div class="card-header bg-light f-normal custom">
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="btn-group">
+                                <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    <i class="pe-7s-info" style="font-size:40px"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-content-left  ml-3 header-user-info">
+                            <div class="widget-heading text-default">
+                                Transaction date,
+                                <a href="#"> <b>{{out.date|date:"l, F d Y"}} at {{out.time}}</b> </a>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Receiver name,
+                                {% if out.receiver_name %}
+                                <b>{{out.receiver_name|title}}</b>
+                                {% else %}
+                                <i>No specified</i>
+                                {% endif %}
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Out by, <b><a href="#">{{out.added_by.user.get_full_name}}</a></b>
+                            </div>
+                            <div class="widget-subheading text-default">
+                                Description,
+                                {% if out.description %}
+                                <span class="text-primary">{{out.description}}</span>
+                                {% else %}
+                                <i>No specified</i>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
