@@ -173,6 +173,7 @@ class Log(models.Model):
     details = models.ForeignKey(Log_details,on_delete=models.CASCADE,blank=False,null=True);
     added_by = models.ForeignKey(UserProfile,on_delete=models.CASCADE,blank=False,null=True);
     is_out = models.BooleanField(blank=False,null=False,default=False);
+    date_now = models.DateTimeField(blank=False,null=False,default=datetime.now )
 
 
     def is_out_provided(self):

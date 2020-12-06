@@ -1049,6 +1049,10 @@ a.radio-link:hover
     display: inline;
     background: none !important;
 }
+input.input-highlight
+{
+    background: #00000014;
+}
 
 
 

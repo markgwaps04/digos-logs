@@ -210,19 +210,39 @@
                        class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-success btn-lg show">
                         <b>Out</b>
                     </a>
-                    <a data-toggle="tab" href="#in_and_out"
-                       class="btn-pill btn-wide btn btn-outline-success btn-lg show">
-                        <b>In and Out</b>
-                    </a>
                 </div>
             </div>
         </div>
+
 
         <div class="tab-content">
             <form class="tab-pane active" id="in" role="tabpanel" data-parsley-validate>
 
                 <input type="hidden" name="type" value="0">
                 <input type="hidden" name="visitor_id" value="{{person.id}}">
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
+                        Date and Time
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                            <input type="datetime-local"
+                                   name="date"
+                                   value="{{utc_date}}"
+                                   required
+                                   class="form-control input-highlight">
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
 
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label">
@@ -313,6 +333,29 @@
 
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label">
+                        Date and Time
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                            <input type="datetime-local"
+                                   name="date"
+                                   value="{{utc_date}}"
+                                   required
+                                   class="form-control input-highlight">
+                        </div>
+                        <div class="helper mt-1 custom text-primary">
+                            Skip if not necessary
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label class="col-sm-2 col-form-label">
                         Document Type
                     </label>
                     <div class="col-sm-6">
@@ -342,93 +385,6 @@
                                 <option selected value="{{user_profile.department.id}}">
                                     {{user_profile.department.name}}
                                 </option>
-                            </select>
-                        </div>
-                        <div class="helper mt-1 custom text-primary">
-                            Skip if not necessary
-                        </div>
-                    </div>
-                </div>
-
-                <div class="position-relative row form-group">
-                    <label class="col-sm-2 col-form-label">
-                        2nd Contact N#
-                    </label>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">+63</span>
-                            </div>
-                            <input type="text"
-                                   placeholder="Optional"
-                                   name="contact_number2"
-                                   data-parsley-onlynumbers
-                                   data-parsley-type="number"
-                                   class="form-control">
-                        </div>
-                        <div class="helper mt-1 custom text-primary">
-                            Skip if not necessary
-                        </div>
-                    </div>
-                </div>
-
-                <div class="position-relative row form-group">
-                    <label class="col-sm-2 col-form-label">
-                        Details/Reason
-                    </label>
-                    <div class="col-sm-9">
-                <textarea name="purpose"
-                          placeholder="Optional"
-                          style="height:150px"
-                          class="form-control"></textarea>
-                        <div class="helper mt-1 custom text-primary">
-                            Skip if not necessary
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer" style="position:relative">
-                    <button type="submit" class="btn btn-lg btn-primary">
-                        Save and Close
-                    </button>
-                </div>
-
-            </form>
-            <form class="tab-pane" id="in_and_out" role="tabpanel" data-parsley-validate>
-
-                <input type="hidden" name="type" value="2">
-                <input type="hidden" name="visitor_id" value="{{person.id}}">
-
-                <div class="position-relative row form-group">
-                    <label class="col-sm-2 col-form-label">
-                        Document Type
-                    </label>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <select class="form-control" name="document_type">
-                                <option selected value="">No documents</option>
-                                {% for per in document_type %}
-                                <option value="{{per.id}}">{{per.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="helper mt-1 custom text-primary">
-                            Skip if not necessary
-                        </div>
-                    </div>
-                </div>
-
-                <div class="position-relative row form-group">
-                    <label class="col-sm-2 col-form-label">
-                        Document From
-                    </label>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <select class="form-control" name="document_from">
-                                <option selected value="">No documents</option>
-                                {% for per in department %}
-                                <option value="{{per.id}}">{{per.name}}</option>
-                                {% endfor %}
                             </select>
                         </div>
                         <div class="helper mt-1 custom text-primary">

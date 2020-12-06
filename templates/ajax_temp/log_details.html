@@ -19,7 +19,7 @@
 
             <div
                     class="card-header
-                    {% if data.is_out_provided and data.type == LOG.IN_AND_OUT %} bg-success
+                    {% if data.is_out_provided and data.type == LOG.IN %} bg-success
                     {% elif data.type == LOG.OUT %} bg-warning
                     {% elif data.type == LOG.IN_AND_OUT and data.is_out_provided == False  %} bg-warning
                     {% else %} bg-info
@@ -29,7 +29,7 @@
                         <div class="widget-content-left">
                             <div class="btn-group">
                                 <a aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                    {% if data.is_out_provided and data.type == LOG.IN_AND_OUT %}
+                                    {% if data.is_out_provided and data.type == LOG.IN %}
                                     <i class="pe-7s-check" style="font-size:40px"></i>
                                     {% elif data.type == LOG.OUT %} <i class="pe-7s-info" style="font-size:40px"></i>
                                     {% else %} <i class="pe-7s-help1" style="font-size:40px"></i>
@@ -39,11 +39,11 @@
                         </div>
                         <div class="widget-content-left  ml-3 header-user-info">
                             <div class="widget-heading">
-                                {% if data.is_out_provided and data.type == LOG.IN_AND_OUT %} Done
+                                {% if data.is_out_provided and data.type == LOG.IN %} No Pending Transaction
                                 {% elif data.type == LOG.IN_AND_OUT and data.is_out_provided == False %}
                                 Pending for request
                                 {% elif data.type == LOG.OUT %} Ongoing Transaction
-                                {% else %} No further transaction
+                                {% else %} Pending Transaction
                                 {% endif %}
                             </div>
                         </div>
@@ -203,7 +203,7 @@
 
             </div>
 
-            {% if data.is_out_provided == False and data.type == LOG.IN_AND_OUT %}
+            {% if data.is_out_provided == False and data.type == LOG.IN %}
 
             <form class="init_modal" action="/log/out/save">
                 <input type="hidden" name="log_id" value="{{data.id}}">

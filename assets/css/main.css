@@ -1,0 +1,43 @@
+.grid-cus .jsgrid-grid-body,
+.grid-cus .jsgrid-cell
+{
+    border: none;
+}
+
+.grid-cus .jsgrid-header-scrollbar
+{
+    display: none;
+}
+
+.f-normal,
+.card-header.f-normal
+{
+    font-weight: normal;
+    text-transform: inherit;
+}
+
+
+.form-highlight input,
+.form-highlight textarea,
+.form-highlight select
+{
+   background: #00000014;
+}
+
+.inner_container
+{
+    width:100%;
+}
+
+.text-default
+{
+    color : #495057;
+}
+.modal-backdrop.in { background:none; }
+
+.add_log .modal-footer
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

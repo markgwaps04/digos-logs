@@ -135,11 +135,13 @@ def request_temp_visitor_add(request):
         });
 
         of_department = Department.objects.all().order_by("name");
-        of_user_profile = UserProfile.objects.get(id=request.user.id);
+        of_user_profile = UserProfile.objects.get(user_id=request.user.id);
+
 
         return render(request, "ajax_temp/action_type_new_visitor.html", {
             'data': data,
             "of_date": datetime.now(),
+            "utc_date" : datetime.now().strftime("%Y-%m-%dT%H:%M"),
             "department": of_department,
             "user_profile" : of_user_profile,
             "document_type": Document_type.objects.all().order_by("name"),
@@ -148,7 +150,7 @@ def request_temp_visitor_add(request):
 
 
     except helpers.InvalidRequest:
-        return HttpResponse('Gago');
+        return HttpResponse('Nothing');
     pass;
 
     pass;
@@ -177,6 +179,7 @@ def request_temp_old_visitor(request):
         'data': data,
         "person": of_person,
         "of_date": datetime.now(),
+        "utc_date" : datetime.now().strftime("%Y-%m-%dT%H:%M"),
         "last_log": of_log,
         "department": of_department,
         "obj_log" :Log,
@@ -191,6 +194,7 @@ def database_add_new_visitor(request):
 
     constraint = helpers.constraint(request, "POST");
     data = constraint.safe({
+        "date" : True,
         "contact_number": False,
         "department": False,
         "first_name": True,
@@ -245,11 +249,15 @@ def database_add_new_visitor(request):
     of_log_details.clean();
     of_log_details.save();
 
+    of_date_time = datetime.strptime(data['date'], '%Y-%m-%dT%H:%M');
+
     of_log = Log(
         type=data['type'],
         purpose=data['purpose'],
         details=of_log_details,
-        added_by=of_user
+        added_by=of_user,
+        date = of_date_time.date(),
+        time = of_date_time.time()
     );
 
     try:
@@ -273,6 +281,7 @@ def database_add_new_visitor(request):
 def database_add_new_log(request):
     constraint = helpers.constraint(request, "POST");
     data = constraint.safe({
+        "date" : True,
         "contact_number2": False,
         "purpose": False,
         "type": True,
@@ -303,11 +312,15 @@ def database_add_new_log(request):
         of_log_details.clean();
         of_log_details.save();
 
+        of_date_time = datetime.strptime(data['date'], '%Y-%m-%dT%H:%M');
+
         of_log = Log(
             type=data['type'],
             purpose=data['purpose'],
             details=of_log_details,
-            added_by=of_user
+            added_by=of_user,
+            date = of_date_time.date(),
+            time = of_date_time.time()
         );
 
         try:
@@ -410,7 +423,7 @@ def populate_list_log(request):
 
         pass;
 
-    of_log = of_log.order_by("-date","-time")
+    of_log = of_log.order_by("-date_now")
 
     if len(of_log):
 

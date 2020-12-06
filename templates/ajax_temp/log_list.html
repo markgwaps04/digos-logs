@@ -3,11 +3,12 @@
         <thead>
         <tr>
             <th class="text-center" style="width:auto">Tracing Code.</th>
-            <th style="width:40%">Visitor Name</th>
-            <th class="text-center" style="width:10%">Time</th>
-            <th class="text-center" style="width:10%">Document Type</th>
+            <th style="width:30%">Visitor Name</th>
+            <th class="text-center" style="width:15%">In</th>
+            <th class="text-center" style="width:15%">Out</th>
+            <th class="text-center" style="width:20%">Document Type</th>
             <th class="text-center" style="width:20%">State</th>
-            <th class="text-center">Actions</th>
+            <th class="text-center" style="width:20%">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -18,7 +19,7 @@
             <td class="text-center text-muted" style="width:auto">
                 <small><b>{{per.details.tracing_code}}</b></small>
             </td>
-            <td style="width:40%">
+            <td style="width:30%">
                 <div class="widget-content p-0">
                     <div class="widget-content-wrapper">
                         <div class="widget-content-left mr-3">
@@ -55,15 +56,49 @@
 
                             {% endif %}
 
-                            <div class="widget-subheading opacity-8">
-                                {{per.date|date:"D, N d Y"}}
+
+                            {% if per.details.person_visitor.department %}
+
+                            {{per.details.person_visitor.department.name|lower|title}}
+
+                            {% else %}
+
+                            <div class="widget-subheading opacity-8" style="font-size: 12px;">
+                                {{per.details.person_visitor.department.name|lower|title}}
+                                <i>No office assigned</i>
                             </div>
+
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>
             </td>
-            <td class="text-center" style="width:10%">
-                {{per.time|date:"h:i A"}}
+            <td class="text-center" style="width:15%; font-size:13px">
+                {{per.date|date:"D, N d Y"}}
+                <p class="no-margin">{{per.time|date:"h:i A"}}</p>
+            </td>
+            <td class="text-center" style="width:15%; font-size:13px">
+                {% if per.out %}
+
+                {{per.out.date|date:"D, N d Y"}}
+                <p class="no-margin">{{per.out.time|date:"h:i A"}}</p>
+
+                {% else %}
+
+                {% if per.type == LOG.IN %}
+
+                <span class="fa fa-times-circle" style="font-size: 17px;color: orangered;">
+                </span>
+
+                {% else %}
+
+                <span class="fa fa-check-circle text-success" style="font-size: 17px;">
+                </span>
+
+                {% endif %}
+
+                {% endif %}
             </td>
             <td class="text-center" style="width:10%">
                 {% if per.details.document_type %}
@@ -74,20 +109,18 @@
                 {% endif %}
             </td>
             <td class="text-center" style="width:20%">
-                {% if per.type == LOG.IN_AND_OUT %}
 
-                {% if per.out %}
-                <div class="badge badge-success">Done</div>
-                {% else %}
-                <div class="badge badge-warning">PENDING FOR REQUEST</div>
-                {% endif %}
-
-                {% elif per.type == LOG.OUT %}
+                {% if per.type == LOG.OUT %}
 
                 <div class="badge badge-secondary">ON GOING</div>
 
                 {% else %}
-                <div class="badge badge-info">No transaction</div>
+
+                {% if per.out %}
+                <div class="badge badge-success">Done</div>
+                {% else %}
+                <div class="badge badge-focus">PENDING</div>
+                {% endif %}
 
                 {% endif %}
                 <div class="badge badge-info">{{per.get_type_display}}</diV>
@@ -96,7 +129,7 @@
             <td class="text-center">
                 <form class="inline init_modal" action="/log/details">
                     <input type="hidden" name="log_id" value="{{per.id}}">
-                    <button class="btn btn-lg btn-primary"> More Details</button>
+                    <button class="btn btn-lg btn-primary">More</button>
                 </form>
             </td>
 
